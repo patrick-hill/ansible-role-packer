@@ -1,0 +1,23 @@
+galaxy_info:
+  author: Patrick-Hill
+  description: Ansible role to install Packer
+  license: BSD
+  min_ansible_version: 2.0
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - wily
+    - xenial
+    - yakkety
+  - name: Debian
+    versions:
+    - stretch
+    - wheezy
+
+  galaxy_tags:
+  - installer
+  - virtualization
+  - vm
+
+dependencies: []

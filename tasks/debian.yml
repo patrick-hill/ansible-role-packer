@@ -1,0 +1,43 @@
+---
+- name: Check if installed
+  command: dpkg-query -W packer
+  register: installed
+  failed_when: installed.rc > 1
+  changed_when: installed.rc == 1
+
+- block:
+
+  - name: Download archive
+    get_url:
+      url: "{{ packer_link }}"
+      dest: "/tmp/{{ packer_download_file }}"
+      validate_certs: False
+    register: packer_downloaded
+
+  - name: Create install directory
+    file: path=/opt/packer/{{ packer_version }} state=directory recurse=yes
+    become: yes
+    when: packer_downloaded|changed
+
+  - name: Extract archive
+    unarchive:
+      src: "/tmp/{{ packer_download_file }}"
+      dest: "/opt/packer/{{ packer_version }}"
+      copy: no
+    become: yes
+    when: packer_downloaded|changed
+
+  - name: Symlink executable
+    file:
+      src: /opt/packer/{{ packer_version}}/packer
+      dest: /usr/local/bin/packer
+      state: link
+    become: yes
+    when: packer_downloaded|changed
+
+  - name: Remove archive
+    file:
+      path: "/tmp/{{ packer_download_file }}"
+      state: absent
+
+  when: installed|failed

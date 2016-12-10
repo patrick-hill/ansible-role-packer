@@ -1,0 +1,3 @@
+---
+packer_download_file: packer_{{ packer_version }}_linux_amd64.zip
+packer_link: https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_download_file }}
