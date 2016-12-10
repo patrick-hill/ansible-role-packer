@@ -17,7 +17,7 @@ Role Variables
 --------------
 
     packer_version: 0.12.0
-"packer_version: 0.12.0" is the desired version, tested are: `0.9.0` & `0.12.0`
+"packer_version is the desired version, tested are: `0.9.0` & `0.12.0`
 
 Dependencies
 ------------

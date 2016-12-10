@@ -1,9 +1,8 @@
 ---
 - name: Check if installed
-  command: dpkg-query -W packer
+  stat: path="/opt/packer/{{ packer_version }}"
   register: installed
-  failed_when: installed.rc > 1
-  changed_when: installed.rc == 1
+  changed_when: not installed.stat.exists
 
 - block:
 
@@ -40,4 +39,4 @@
       path: "/tmp/{{ packer_download_file }}"
       state: absent
 
-  when: installed|failed
+  when: not installed.stat.exists
